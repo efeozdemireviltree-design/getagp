@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>GTA Haftalık</title>
+</head>
+<body>
+    <h1>Bu Haftanın Araçları</h1>
+    <div id="veri">Yükleniyor...</div>
+
+    <script>
+        fetch('data.json')
+            .then(res => res.json())
+            .then(data => {
+                // Burada veriyi ekrana basıyoruz
+                document.getElementById('veri').innerText = "Podium: " + data.podium_vehicle;
+            });
+    </script>
+</body>
+</html>
