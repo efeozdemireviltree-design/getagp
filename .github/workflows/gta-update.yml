@@ -1,0 +1,23 @@
+name: GuncelVeriBot
+on:
+  schedule:
+    - cron: '0 12 * * 4' # Her Perşembe 12:00
+  workflow_dispatch: # Elle test etmek için butonu aktif eder
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Veriyi Cek ve Kaydet
+        run: |
+          # GTA Weekly sitesinden veriyi çekiyoruz
+          curl -L "https://gtaweekly.com/api/v1/weekly" > data.json
+          
+          # GitHub'a "Bu veriyi kaydet" diyoruz
+          git config user.name "GtaBot"
+          git config user.email "bot@github.com"
+          git add data.json
+          git commit -m "Canli veri guncellendi"
+          git push
