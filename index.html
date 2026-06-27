@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>GTA Haftalık</title>
+    <style>
+        body { background: #121212; color: white; font-family: sans-serif; padding: 20px; }
+        .kutu { background: #1e1e1e; padding: 15px; margin: 10px 0; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <h1>Bu Haftanın Araçları</h1>
-    <div id="veri">Yükleniyor...</div>
+    <h1>GTA Güncel Liste</h1>
+    <div id="icerik">Yükleniyor...</div>
 
     <script>
-        fetch('data.json')
+        fetch('./data.json')
             .then(res => res.json())
             .then(data => {
-                // Burada veriyi ekrana basıyoruz
-                document.getElementById('veri').innerText = "Podium: " + data.podium_vehicle;
+                let html = `
+                    <div class="kutu"><h3>Podium:</h3> ${data.podium_vehicle.name}</div>
+                    <div class="kutu"><h3>2x Görevler:</h3> ${data.bonuses.map(b => b.name).join(', ')}</div>
+                    <div class="kutu"><h3>İndirimler:</h3> ${data.discounts.map(d => d.name).join(', ')}</div>
+                `;
+                document.getElementById('icerik').innerHTML = html;
             });
     </script>
 </body>
